@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools{
-        jdk  'jdk11'
+        jdk  'java'
         maven  'maven3'
     }
     
@@ -32,9 +32,9 @@ pipeline {
         stage('Sonarqube') {
             steps {
                 withSonarQubeEnv('sonar-server'){
-                   sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Shopping-Cart \
+                   sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=ShoppCart \
                    -Dsonar.java.binaries=. \
-                   -Dsonar.projectKey=Shopping-Cart '''
+                   -Dsonar.projectKey=ShoppCart '''
                }
             }
         }
@@ -50,9 +50,9 @@ pipeline {
                 script{
                     withDockerRegistry(credentialsId: '2fe19d8a-3d12-4b82-ba20-9d22e6bf1672', toolName: 'docker') {
                         
-                        sh "docker build -t shopping-cart -f docker/Dockerfile ."
-                        sh "docker tag  shopping-cart harshateja96/shopping-cart:latest"
-                        sh "docker push harshateja96/shopping-cart:latest"
+                        sh "docker build -t shoppCart -f docker/Dockerfile ."
+                        sh "docker tag  shoppCart harshateja96/shoppCart:latest"
+                        sh "docker push harshateja96/shoppCart:latest"
                     }
                 }
             }
