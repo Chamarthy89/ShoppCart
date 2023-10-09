@@ -31,7 +31,7 @@ pipeline {
         
         stage('Sonarqube') {
             steps {
-                withSonarQubeEnv('sonar-server'){
+                withSonarQubeEnv('sonar-scanner'){
                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=ShoppCart \
                    -Dsonar.java.binaries=. \
                    -Dsonar.projectKey=ShoppCart '''
@@ -48,7 +48,7 @@ pipeline {
         stage('Docker Build & Push') {
             steps {
                 script{
-                    withDockerRegistry(credentialsId: '2fe19d8a-3d12-4b82-ba20-9d22e6bf1672', toolName: 'docker') {
+                    withDockerRegistry(credentialsId: '49367ee0-a282-4d91-bd0d-b86319442b83', toolName: 'docker') {
                         
                         sh "docker build -t shoppCart -f docker/Dockerfile ."
                         sh "docker tag  shoppCart harshateja96/shoppCart:latest"
